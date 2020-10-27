@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <conio.h>
 using namespace std;
 
@@ -6,7 +6,7 @@ int significacion(char a)
 {
     int sig;
     if ((a == 40) || (a == 41)) // ( )
-        sig = 0;
+        sig = 4;
     else if ((a == 43) || (a == 45)) // + -
         sig = 1;
     else if ((a == 42) || (a == 47)) // * /
@@ -181,11 +181,11 @@ int main()
                     }
                     else
                     {
-                        if ((arr[i] == 41) && (k > 0))//если закрывающая скобка - очищаем стек
+                        if ((arr[i] == 41) && (k > 0))//если закрывающая скобка - (очищаем стек) -> очистить до открывающей скобки
                         {
-                          
-                            int t;
-                            for (t = k; t > 0; t--)
+                            int t = k;
+                            while (stek[t - 1] != 40)
+                            //for (t = k; t > 0; t--)
                             {
                                 if ((stek[t - 1] != 40) && (stek[t - 1] != 41))
                                 {
@@ -193,12 +193,19 @@ int main()
                                 }
                                 stek[t - 1] = 0;
                                 k--;
+                                t--;
                             }
-                          
+                            stek[t - 1] = 0;
+                            k--;
+                            t--;
                         }
                         while ((k > 0) && (significacion(arr[i]) <= significacion(stek[k - 1])))//если ниже - выводим стек, пока не станет выше и записываем
                         {
-                            cout << stek[k - 1] << " ";
+                            if ((stek[k - 1] != 40) && (stek[k - 1] != 41))
+                            {
+                                cout << stek[k - 1] << " ";
+                            }
+                          /*  cout << stek[k - 1] << " ";*/
                             k--;
 
                         }
